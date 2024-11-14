@@ -1,0 +1,43 @@
+/* Style pour le tableau */
+table {
+    width: 100%;                 
+    /* Occupe toute la largeur de l’élément parent */
+    border-collapse: collapse;    
+    /* Supprime les espaces entre les bordures des cellules */
+}
+
+/* Style pour les cellules d'en-tête (th) et les cellules de données (td) */
+th, td {
+    padding: 8px;                 
+    /* Ajoute un espacement interne de 8px autour du contenu */
+    text-align: left;             
+    /* Aligne le texte à gauche dans chaque cellule */
+}
+
+/* Style pour les lignes du tableau */
+tr {
+    border-top: 1px solid #ddd;  
+     /* Ajoute une bordure grise en haut de chaque ligne */
+}
+
+/* Style de base pour les indicateurs de statut */
+span.status {
+    padding: 5px 10px;            
+    /* Ajoute un espacement interne autour du texte du statut */
+    color: white;                 
+    /* Définit la couleur du texte en blanc */
+    border-radius: 3px;           
+    /* Arrondit les coins du conteneur de statut */
+}
+
+/* Style pour le statut "disponible" */
+span.disponible {
+    background-color: green;      
+    /* Définit un fond vert pour indiquer "disponible" */
+}
+
+/* Style pour le statut "réservée" */
+span.reservee {
+    background-color: red;        
+    /* Définit un fond rouge pour indiquer "réservée" */
+}

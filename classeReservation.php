@@ -1,31 +1,28 @@
 <?php
 class Reservation {
-    private Client $_client; 
-    // Référence au client qui a effectué la réservation
-    private Chambre $_chambre; 
-    // Chambre associée à cette réservation
-    private DateTime $_dateArrivee;
-     // Date d'arrivée du client
-    private DateTime $_dateSortie; 
+    // Attributs privés pour stocker les informations d'une réservation
+    private Client $_client;      
+     // Client associé à la réservation
+    private Chambre $_chambre;     
+    // Chambre associée à la réservation
+    private DateTime $_dateArrivee; 
+    // Date d'arrivée du client
+    private DateTime $_dateSortie;  
     // Date de départ du client
 
     // Constructeur pour initialiser les informations de la réservation
     public function __construct(Client $client, Chambre $chambre, string $dateArrivee, string $dateSortie) {
-        $this->_client = $client; 
-        // Associe le client à la réservation
-        $this->_chambre = $chambre; 
+        $this->_client = $client;              
+         // Associe le client à la réservation
+        $this->_chambre = $chambre;             
         // Associe la chambre à la réservation
 
-        // Utilisation de createFromFormat pour spécifier le format d'entrée des dates
-        $this->_dateArrivee = DateTime::createFromFormat('d-m-Y', $dateArrivee); 
-        // Initialise la date d'arrivée
-        $this->_dateSortie = DateTime::createFromFormat('d-m-Y', $dateSortie); 
-        // Initialise la date de sortie
+        // Initialise les dates d'arrivée et de sortie en utilisant le format d-m-Y
+        $this->_dateArrivee = DateTime::createFromFormat('d-m-Y', $dateArrivee);
+        $this->_dateSortie = DateTime::createFromFormat('d-m-Y', $dateSortie);
 
-        // Ajoute cette réservation aux réservations du client
+        // Ajoute la réservation au client et à la chambre
         $client->ajouterReservation($this);
-
-        // Ajoute cette réservation aux réservations de la chambre
         $chambre->ajouterReservation($this);
     }
 
@@ -34,56 +31,45 @@ class Reservation {
         // Calcule la différence en jours entre la date d'arrivée et la date de sortie
         $diff = $this->_dateArrivee->diff($this->_dateSortie);
 
-        // Retourne le prix total basé sur le nombre de jours multiplié par le prix de la chambre par nuit
+        // Retourne le coût total de la réservation (prix par nuit * nombre de jours)
         return $this->_chambre->getPrix() * $diff->days;
     }
 
-    // Méthode pour obtenir le client de la réservation
+    // Getter pour obtenir le client associé à la réservation
     public function getClient(): Client {
-        return $this->_client; 
-        // Retourne le client associé à cette réservation
+        return $this->_client;
     }
 
-    // Méthode pour obtenir la chambre de la réservation
+    // Getter pour obtenir la chambre associée à la réservation
     public function getChambre(): Chambre {
-        return $this->_chambre; 
-        // Retourne la chambre associée à cette réservation
+        return $this->_chambre;
     }
 
-    // Méthode pour obtenir la date d'arrivée
+    // Getter pour obtenir la date d'arrivée
     public function getDateArrivee(): DateTime {
-        return $this->_dateArrivee; 
-        // Retourne la date d'arrivée de la réservation
+        return $this->_dateArrivee;
     }
 
-    // Méthode pour obtenir la date de sortie
+    // Getter pour obtenir la date de sortie
     public function getDateSortie(): DateTime {
-        return $this->_dateSortie; 
-        // Retourne la date de sortie de la réservation
+        return $this->_dateSortie;
     }
 
+    // Méthode magique __toString pour obtenir une représentation textuelle de la réservation
     public function __toString(): string {
-        // Récupérer les informations de l'hôtel associé à la chambre
-        $hotel = $this->_chambre->getHotel();  
-        // On récupère l'objet Hotel de la chambre via la méthode getHotel()
-    
-        // Déterminer si la chambre a le WiFi ou non, pour l'affichage
-        $wifiStatus = $this->_chambre->getWifi() ? "oui" : "non";  
-        // On vérifie si la chambre a du WiFi et on attribue "oui" ou "non" à la variable $wifiStatus
-        
-        // Retourner une chaîne de caractères qui représente la réservation
-        return "{$this->_client->getPrenom()} {$this->_client->getNom()} - " .  
-        // Affiche le prénom et le nom du client de la réservation
-               "Hôtel {$hotel->getNomHotel()} ({$hotel->getVilleHotel()}) / " .  
-               // Affiche le nom et la ville de l'hôtel associé à la réservation
-               "Chambre {$this->_chambre->getNumeroChambre()} ({$this->_chambre->getNbLits()} lits - " .  
-               // Affiche le numéro de la chambre et le nombre de lits
-               "{$this->_chambre->getPrix()} € - Wifi : {$wifiStatus}) " .  
-               // Affiche le prix de la chambre et si elle a du WiFi (oui ou non)
-               "du " . $this->_dateArrivee->format('d-m-Y') . " au " .  
-               // Affiche la date d'arrivée de la réservation au format 'jour-mois-année'
-               $this->_dateSortie->format('d-m-Y');  
-               // Affiche la date de sortie de la réservation au format 'jour-mois-année'
+        // Récupère l'hôtel associé à la chambre via la méthode getHotel()
+        $hotel = $this->_chambre->getHotel();
+
+        // Détermine si la chambre a le WiFi (affiche "oui" ou "non")
+        $wifiStatus = $this->_chambre->getWifi() ? "oui" : "non";
+
+        // Retourne une chaîne de caractères représentant la réservation en détail
+        return "{$this->_client->getPrenom()} {$this->_client->getNom()} - " .
+               "Hôtel {$hotel->getNomHotel()} ({$hotel->getVilleHotel()}) / " .
+               "Chambre {$this->_chambre->getNumeroChambre()} ({$this->_chambre->getNbLits()} lits - " .
+               "{$this->_chambre->getPrix()} € - Wifi : {$wifiStatus}) " .
+               "du " . $this->_dateArrivee->format('d-m-Y') . " au " .
+               $this->_dateSortie->format('d-m-Y');
     }
-}    
+}
 ?>

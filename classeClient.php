@@ -43,8 +43,14 @@ class Client {
             $total = 0;    
             // Variable pour calculer le total des prix des réservations
             foreach ($this->_reservations as $reservation) {
-                echo $reservation . "<br>";        
-                // Affiche chaque réservation (utilise __toString de Reservation)
+                echo $reservation->getChambre()->getHotel()->getNomHotel() . ' **** ' // Nom de l'hôtel
+                . $reservation->getChambre()->getHotel()->getVilleHotel() . "/ Chambre: " // Ville de l'hôtel
+                . $reservation->getChambre()->getNumeroChambre() . ' ' 
+                . '(' . $reservation->getChambre()->getNbLits() . ' lits - ' // Parenthèse ouverte avant le nombre de lits
+                . $reservation->getChambre()->getPrix() . ' "€" - ' // Prix de la chambre
+                . 'WiFi: ' . ($reservation->getChambre()->getWifi() ? 'oui' : 'non') . ') ' // Parenthèse fermée après le WiFi
+                . 'du ' . $reservation->getDateArrivee()->format('d/m/Y') // Date d'arrivée
+                . ' au ' . $reservation->getDateSortie()->format('d/m/Y') . '<br>'; // Date de sortie
                 $total += $reservation->getPrix(); 
                 // Ajoute le prix de chaque réservation au total
             }
@@ -53,7 +59,7 @@ class Client {
         }
     }
 
-    // Méthode magique __toString pour obtenir une représentation textuelle du client
+    // Méthode magique __toString pour obtenir le nom et prenom du client
     public function __toString(): string {
         return "{$this->_prenomClient} {$this->_nomClient}"; 
         // Retourne le prénom et le nom du client sous forme de chaîne

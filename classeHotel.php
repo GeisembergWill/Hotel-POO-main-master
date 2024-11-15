@@ -143,9 +143,17 @@ class Hotel {
                     echo "La chambre {$numeroChambre} est déjà réservée.<br>";  
                     // Message si la chambre est déjà réservée
                 }
-                break;  // Quitte la boucle dès que la chambre est trouvée
+                break;  
+                // Quitte la boucle dès que la chambre est trouvée
             }
-        }
+        }     
+    }
+
+    public function __toString(): string {
+        return "Hôtel {$this->_nomHotel} ({$this->_villeHotel}) / " .
+        "Chambre {$this->_chambres[0]->getNumeroChambre()} ({$this->_chambres[0]->getNbLits()} lits - " .  // Vous pouvez ajuster cela pour référencer une chambre spécifique
+        "{$this->_chambres[0]->getPrix()} € - Wifi : " . ($this->_chambres[0]->getWifi() ? "Disponible" : "Non disponible") . ") " . 
+        "du " . date('d-m-Y', strtotime($this->_dateArrivee)) . " au " . date('d-m-Y', strtotime($this->_dateSortie));
     }
 }
 ?>

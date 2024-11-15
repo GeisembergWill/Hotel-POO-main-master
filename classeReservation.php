@@ -57,19 +57,25 @@ class Reservation {
 
     // Méthode magique __toString pour obtenir une représentation textuelle de la réservation
     public function __toString(): string {
-        // Récupère l'hôtel associé à la chambre via la méthode getHotel()
+        
         $hotel = $this->_chambre->getHotel();
 
         // Détermine si la chambre a le WiFi (affiche "oui" ou "non")
         $wifiStatus = $this->_chambre->getWifi() ? "oui" : "non";
 
-        // Retourne une chaîne de caractères représentant la réservation en détail
+       
         return "{$this->_client->getPrenom()} {$this->_client->getNom()} - " .
+                // le prenom et nom
                "Hôtel {$hotel->getNomHotel()} ({$hotel->getVilleHotel()}) / " .
+               // le nom de l'hotel et sa ville
                "Chambre {$this->_chambre->getNumeroChambre()} ({$this->_chambre->getNbLits()} lits - " .
+               // numero de chambre et le nombre de lits de la chambre
                "{$this->_chambre->getPrix()} € - Wifi : {$wifiStatus}) " .
+               // prix de la chambre et s'il ya du wifi dans la chambre ou non
                "du " . $this->_dateArrivee->format('d-m-Y') . " au " .
+               //date d'arrivée
                $this->_dateSortie->format('d-m-Y');
+               // date de sortie
     }
 }
 ?>

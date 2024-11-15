@@ -28,10 +28,7 @@ class Client {
 
     // Méthode pour afficher toutes les réservations du client ainsi que le total des prix
     public function afficherReservationsClient(): void {
-        // Affiche un titre avec le prénom et le nom du client
-        echo "<h3>Réservations de {$this->_prenomClient} {$this->_nomClient}</h3>";
-
-        // Vérifie s'il existe des réservations dans la liste
+       // Vérifie s'il existe des réservations dans la liste
         if (empty($this->_reservations)) {
             echo "Aucune réservation !<br>";       
             // Affiche un message si la liste est vide

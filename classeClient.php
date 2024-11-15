@@ -44,7 +44,7 @@ class Client {
                 . $reservation->getChambre()->getHotel()->getVilleHotel() . "/ Chambre: " // Ville de l'hôtel
                 . $reservation->getChambre()->getNumeroChambre() . ' ' 
                 . '(' . $reservation->getChambre()->getNbLits() . ' lits - ' // Parenthèse ouverte avant le nombre de lits
-                . $reservation->getChambre()->getPrix() . ' "€" - ' // Prix de la chambre
+                . $reservation->getChambre()->getPrix() . ' € - ' // Prix de la chambre
                 . 'WiFi: ' . ($reservation->getChambre()->getWifi() ? 'oui' : 'non') . ') ' // Parenthèse fermée après le WiFi
                 . 'du ' . $reservation->getDateArrivee()->format('d/m/Y') // Date d'arrivée
                 . ' au ' . $reservation->getDateSortie()->format('d/m/Y') . '<br>'; // Date de sortie
